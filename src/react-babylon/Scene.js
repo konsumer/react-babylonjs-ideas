@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
-import { Scene as BabylonScene } from 'babylonjs'
+import BABYLON from 'babylonjs'
 
-import { withEngine } from './Babylon'
+import { withEngine } from './Engine'
 
 export const { Provider, Consumer } = createContext({})
 export const withScene = Component => props => (
@@ -9,9 +9,12 @@ export const withScene = Component => props => (
 )
 
 const Scene = ({ engine, children }) => {
-  console.log('Scene', { engine, children })
+  const scene = new BABYLON.Scene(engine)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Scene', { scene, engine, children })
+  }
   return (
-    <Provider value={new BabylonScene(engine)}>{children || null}</Provider>
+    <Provider value={scene}>{children || null}</Provider>
   )
 }
 

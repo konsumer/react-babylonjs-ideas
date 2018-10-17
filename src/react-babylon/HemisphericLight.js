@@ -1,24 +1,23 @@
-import { HemisphericLight as BabylonHemisphericLight } from 'babylonjs'
+import BABYLON from 'babylonjs'
 
 import { withScene } from './Scene'
 
-const HemisphericLight = ({
-  scene,
-  name,
-  direction,
-  intensity,
-  children = null
-}) => {
-  const light = new BabylonHemisphericLight(name, direction, scene)
-  light.intensity = intensity
-  console.log('HemisphericLight', {
-    name,
+const HemisphericLight = (props) => {
+  const {
     scene,
-    children,
+    name,
     direction,
     intensity,
-    light
-  })
+    children = null
+  } = props
+  const light = new BABYLON.HemisphericLight(name, direction, scene)
+  light.intensity = intensity
+  if (process.env.NODE_ENV === 'development') {
+    console.log('HemisphericLight', {
+      light,
+      ...props
+    })
+  }
   return children
 }
 

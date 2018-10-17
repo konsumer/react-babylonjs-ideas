@@ -1,25 +1,26 @@
-import { MeshBuilder, Vector3, Color4, DEFAULTSIDE } from 'babylonjs'
+import BABYLON from 'babylonjs'
 
 import { withScene } from './Scene'
 
-const Sphere = ({
-  scene,
-  name,
-  position,
-  x = 0,
-  y = 0,
-  z = 0,
-  size = 1,
-  height = 10,
-  width = 10,
-  depth = 10,
-  faceColors = new Color4(1, 1, 1, 1),
-  updatable = false,
-  sideOrientation = DEFAULTSIDE,
-  children = null
+const Sphere = (props) => {
+  const {
+    scene,
+    name,
+    position,
+    x = 0,
+    y = 0,
+    z = 0,
+    size = 1,
+    height = 10,
+    width = 10,
+    depth = 10,
+    faceColors = new BABYLON.Color4(1, 1, 1, 1),
+    updatable = false,
+    sideOrientation = BABYLON.DEFAULTSIDE,
+    children = null
   // faceUV
-}) => {
-  const pos = position || new Vector3(x, y, z)
+  } = props
+  const pos = position || new BABYLON.Vector3(x, y, z)
   const options = {
     position: pos,
     size,
@@ -30,9 +31,11 @@ const Sphere = ({
     updatable,
     sideOrientation
   }
-  MeshBuilder.CreateSphere(name, options, scene)
-  console.log('Sphere', { name, scene, children, ...options })
-  return children
+  const sphere = BABYLON.MeshBuilder.CreateSphere(name, options, scene)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Sphere', { sphere, ...props })
+  }
+  return children || null
 }
 
 export default withScene(Sphere)

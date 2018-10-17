@@ -1,5 +1,5 @@
 import React, { Fragment, Component, createContext } from 'react'
-import { Engine } from 'babylonjs'
+import BABYLON from 'babylonjs'
 
 export const { Provider, Consumer } = createContext({})
 export const withEngine = Component => props => (
@@ -10,7 +10,7 @@ export const withEngine = Component => props => (
   </Consumer>
 )
 
-export default class Babylon extends Component {
+export default class Engine extends Component {
   state = {
     canvas: null,
     engine: null
@@ -19,7 +19,7 @@ export default class Babylon extends Component {
   onCanvasLoaded = canvas => {
     if (canvas) {
       canvas.addEventListener('resize', this.onResizeWindow)
-      const engine = new Engine(
+      const engine = new BABYLON.Engine(
         canvas,
         true,
         this.props.engineOptions,
@@ -31,11 +31,13 @@ export default class Babylon extends Component {
         })
       })
       this.setState({ engine, canvas })
-      console.log('Babylon', {
-        canvas,
-        engine,
-        ...this.props
-      })
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Engine', {
+          canvas,
+          engine,
+          ...this.props
+        })
+      }
     }
   }
 

@@ -1,22 +1,23 @@
-import { FreeCamera as BabylonFreeCamera, Vector3 } from 'babylonjs'
+import BABYLON from 'babylonjs'
 
 import { withScene } from './Scene'
-import { withEngine } from './Babylon'
+import { withEngine } from './Engine'
 
-const FreeCamera = ({
-  name,
-  position,
-  x = 0,
-  y = 0,
-  z = 0,
-  scene,
-  canvas,
-  setActiveOnSceneIfNoneActive = true,
-  target,
-  children = null
-}) => {
-  const pos = position || new Vector3(x, y, z)
-  const camera = new BabylonFreeCamera(
+const FreeCamera = (props) => {
+  const {
+    name,
+    position,
+    x = 0,
+    y = 0,
+    z = 0,
+    scene,
+    canvas,
+    setActiveOnSceneIfNoneActive = true,
+    target,
+    children = null
+  } = props
+  const pos = position || new BABYLON.Vector3(x, y, z)
+  const camera = new BABYLON.FreeCamera(
     name,
     pos,
     scene,
@@ -27,15 +28,12 @@ const FreeCamera = ({
       typeof target === 'string' ? scene.getMeshByName(target).position : pos
   }
   camera.attachControl(canvas)
-  console.log('FreeCamera', {
-    name,
-    scene,
-    children,
-    pos,
-    target,
-    setActiveOnSceneIfNoneActive,
-    canvas
-  })
+  if (process.env.NODE_ENV === 'development') {
+    console.log('FreeCamera', {
+      ...props,
+      position: pos
+    })
+  }
   return children
 }
 
