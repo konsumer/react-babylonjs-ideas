@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PushMaterial extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.PushMaterial = new PushMaterial()
+    const { name, scene } = props
+    this.PushMaterial = new BABYLON.PushMaterial(name, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class PushMaterial extends React.Component {
   }
 }
 
-export default PushMaterial
+export default withScene(PushMaterial)
 

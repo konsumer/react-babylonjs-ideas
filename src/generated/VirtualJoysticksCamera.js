@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class VirtualJoysticksCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.VirtualJoysticksCamera = new VirtualJoysticksCamera()
+    const { name, position, scene } = props
+    this.VirtualJoysticksCamera = new BABYLON.VirtualJoysticksCamera(name, position, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class VirtualJoysticksCamera extends React.Component {
   }
 }
 
-export default VirtualJoysticksCamera
+export default withScene(VirtualJoysticksCamera)
 

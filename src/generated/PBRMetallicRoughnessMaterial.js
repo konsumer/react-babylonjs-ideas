@@ -1,10 +1,17 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PBRMetallicRoughnessMaterial extends React.Component {
   constructor (props) {
     super(props)
-    const { baseColor, baseTexture, metallic, roughness, metallicRoughnessTexture } = props
-    this.PBRMetallicRoughnessMaterial = new PBRMetallicRoughnessMaterial(baseColor, baseTexture, metallic, roughness, metallicRoughnessTexture)
+    const { baseColor, baseTexture, metallic, roughness, metallicRoughnessTexture, name, scene } = props
+    this.PBRMetallicRoughnessMaterial = new BABYLON.PBRMetallicRoughnessMaterial(name, scene)
+    this.PBRMetallicRoughnessMaterial.baseColor = baseColor
+    this.PBRMetallicRoughnessMaterial.baseTexture = baseTexture
+    this.PBRMetallicRoughnessMaterial.metallic = metallic
+    this.PBRMetallicRoughnessMaterial.roughness = roughness
+    this.PBRMetallicRoughnessMaterial.metallicRoughnessTexture = metallicRoughnessTexture
   }
 
   render () {
@@ -12,5 +19,5 @@ class PBRMetallicRoughnessMaterial extends React.Component {
   }
 }
 
-export default PBRMetallicRoughnessMaterial
+export default withScene(PBRMetallicRoughnessMaterial)
 

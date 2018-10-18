@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PhysicsRadialExplosionEvent extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.PhysicsRadialExplosionEvent = new PhysicsRadialExplosionEvent()
+    const { scene } = props
+    this.PhysicsRadialExplosionEvent = new BABYLON.PhysicsRadialExplosionEvent(scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class PhysicsRadialExplosionEvent extends React.Component {
   }
 }
 
-export default PhysicsRadialExplosionEvent
+export default withScene(PhysicsRadialExplosionEvent)
 

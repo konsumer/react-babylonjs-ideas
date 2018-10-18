@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class VRDistortionCorrectionPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.VRDistortionCorrectionPostProcess = new VRDistortionCorrectionPostProcess()
+    const { name, camera, isRightEye, vrMetrics } = props
+    this.VRDistortionCorrectionPostProcess = new BABYLON.VRDistortionCorrectionPostProcess(name, camera, isRightEye, vrMetrics)
+    
   }
 
   render () {

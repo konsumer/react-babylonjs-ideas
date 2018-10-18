@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class LoadFileError extends React.Component {
   constructor (props) {
     super(props)
-    const { request } = props
-    this.LoadFileError = new LoadFileError(request)
+    const { request, message, request } = props
+    this.LoadFileError = new BABYLON.LoadFileError(message, request)
+    this.LoadFileError.request = request
   }
 
   render () {

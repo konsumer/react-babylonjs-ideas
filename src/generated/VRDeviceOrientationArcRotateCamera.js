@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class VRDeviceOrientationArcRotateCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.VRDeviceOrientationArcRotateCamera = new VRDeviceOrientationArcRotateCamera()
+    const { name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics } = props
+    this.VRDeviceOrientationArcRotateCamera = new BABYLON.VRDeviceOrientationArcRotateCamera(name, alpha, beta, radius, target, scene, compensateDistortion, vrCameraMetrics)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class VRDeviceOrientationArcRotateCamera extends React.Component {
   }
 }
 
-export default VRDeviceOrientationArcRotateCamera
+export default withScene(VRDeviceOrientationArcRotateCamera)
 

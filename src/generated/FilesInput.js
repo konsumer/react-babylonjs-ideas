@@ -1,10 +1,18 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
+import { withEngine } from './Engine'
 
 class FilesInput extends React.Component {
   constructor (props) {
     super(props)
-    const { onProcessFileCallback, renderFunction, drag, drop } = props
-    this.FilesInput = new FilesInput(onProcessFileCallback, renderFunction, drag, drop)
+    const { FilesToLoad, onProcessFileCallback, renderFunction, drag, drop, engine, scene, sceneLoadedCallback, progressCallback, additionalRenderLoopLogicCallback, textureLoadingCallback, startingProcessingFilesCallback, onReloadCallback, errorCallback } = props
+    this.FilesInput = new BABYLON.FilesInput(engine, scene, sceneLoadedCallback, progressCallback, additionalRenderLoopLogicCallback, textureLoadingCallback, startingProcessingFilesCallback, onReloadCallback, errorCallback)
+    this.FilesInput.FilesToLoad = FilesToLoad
+    this.FilesInput.onProcessFileCallback = onProcessFileCallback
+    this.FilesInput.renderFunction = renderFunction
+    this.FilesInput.drag = drag
+    this.FilesInput.drop = drop
   }
 
   render () {
@@ -12,5 +20,5 @@ class FilesInput extends React.Component {
   }
 }
 
-export default FilesInput
+export default withEngine(FilesInput)
 

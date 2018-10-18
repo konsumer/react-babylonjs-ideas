@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class FreeCameraInputsManager extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.FreeCameraInputsManager = new FreeCameraInputsManager()
+    const { camera } = props
+    this.FreeCameraInputsManager = new BABYLON.FreeCameraInputsManager(camera)
+    
   }
 
   render () {

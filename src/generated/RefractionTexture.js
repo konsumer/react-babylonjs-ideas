@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class RefractionTexture extends React.Component {
   constructor (props) {
     super(props)
-    const { refractionPlane, depth } = props
-    this.RefractionTexture = new RefractionTexture(refractionPlane, depth)
+    const { refractionPlane, depth, name, size, scene, generateMipMaps } = props
+    this.RefractionTexture = new BABYLON.RefractionTexture(name, size, scene, generateMipMaps)
+    this.RefractionTexture.refractionPlane = refractionPlane
+    this.RefractionTexture.depth = depth
   }
 
   render () {
@@ -12,5 +16,5 @@ class RefractionTexture extends React.Component {
   }
 }
 
-export default RefractionTexture
+export default withScene(RefractionTexture)
 

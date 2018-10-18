@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class GamepadCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.GamepadCamera = new GamepadCamera()
+    const { name, position, scene } = props
+    this.GamepadCamera = new BABYLON.GamepadCamera(name, position, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class GamepadCamera extends React.Component {
   }
 }
 
-export default GamepadCamera
+export default withScene(GamepadCamera)
 

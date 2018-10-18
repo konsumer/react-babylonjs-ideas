@@ -1,7 +1,7 @@
 import BABYLON from 'babylonjs'
 
 import { withScene } from './Scene'
-import { withEngine } from './Engine'
+import { withCanvas } from './Engine'
 
 const FreeCamera = (props) => {
   const {
@@ -16,6 +16,9 @@ const FreeCamera = (props) => {
     target,
     children = null
   } = props
+  if (!canvas) {
+    console.error('No Canvas.')
+  }
   const pos = position || new BABYLON.Vector3(x, y, z)
   const camera = new BABYLON.FreeCamera(
     name,
@@ -24,17 +27,13 @@ const FreeCamera = (props) => {
     setActiveOnSceneIfNoneActive
   )
   if (target) {
-    camera.lockedTarget =
-      typeof target === 'string' ? scene.getMeshByName(target).position : pos
+    camera.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target).position : pos
   }
   camera.attachControl(canvas)
   if (process.env.NODE_ENV === 'development') {
-    console.log('FreeCamera', {
-      ...props,
-      position: pos
-    })
+    console.log('FreeCamera', { ...props, position: pos })
   }
   return children
 }
 
-export default withEngine(withScene(FreeCamera))
+export default withCanvas(withScene(FreeCamera))

@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class AnaglyphPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.AnaglyphPostProcess = new AnaglyphPostProcess()
+    const { name, options, rigCameras, samplingMode, engine, reusable } = props
+    this.AnaglyphPostProcess = new BABYLON.AnaglyphPostProcess(name, options, rigCameras, samplingMode, engine, reusable)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class AnaglyphPostProcess extends React.Component {
   }
 }
 
-export default AnaglyphPostProcess
+export default withEngine(AnaglyphPostProcess)
 

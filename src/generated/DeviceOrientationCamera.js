@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class DeviceOrientationCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.DeviceOrientationCamera = new DeviceOrientationCamera()
+    const { name, position, scene } = props
+    this.DeviceOrientationCamera = new BABYLON.DeviceOrientationCamera(name, position, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class DeviceOrientationCamera extends React.Component {
   }
 }
 
-export default DeviceOrientationCamera
+export default withScene(DeviceOrientationCamera)
 

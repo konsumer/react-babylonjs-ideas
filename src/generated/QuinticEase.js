@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class QuinticEase extends React.Component {
   constructor (props) {
     super(props)
     const {  } = props
-    this.QuinticEase = new QuinticEase()
+    this.QuinticEase = new BABYLON.QuinticEase()
+    
   }
 
   render () {

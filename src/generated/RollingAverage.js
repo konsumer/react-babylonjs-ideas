@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class RollingAverage extends React.Component {
   constructor (props) {
     super(props)
-    const { average, variance } = props
-    this.RollingAverage = new RollingAverage(average, variance)
+    const { average, variance, length } = props
+    this.RollingAverage = new BABYLON.RollingAverage(length)
+    this.RollingAverage.average = average
+    this.RollingAverage.variance = variance
   }
 
   render () {

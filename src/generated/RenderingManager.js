@@ -1,10 +1,15 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class RenderingManager extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.RenderingManager = new RenderingManager()
+    const { MAX_RENDERINGGROUPS, MIN_RENDERINGGROUPS, AUTOCLEAR, scene } = props
+    this.RenderingManager = new BABYLON.RenderingManager(scene)
+    this.RenderingManager.MAX_RENDERINGGROUPS = MAX_RENDERINGGROUPS
+    this.RenderingManager.MIN_RENDERINGGROUPS = MIN_RENDERINGGROUPS
+    this.RenderingManager.AUTOCLEAR = AUTOCLEAR
   }
 
   render () {
@@ -12,5 +17,5 @@ class RenderingManager extends React.Component {
   }
 }
 
-export default RenderingManager
+export default withScene(RenderingManager)
 

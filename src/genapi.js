@@ -7,8 +7,8 @@ const project = new Project({})
 project.addExistingSourceFiles(`${__dirname}/../node_modules/babylonjs/**/*.ts`)
 const sourceFile = project.getSourceFileOrThrow('babylon.d.ts')
 
-const template = (name, params) => {
-  const imports = [['React', 'react']]
+const template = (name, params, properties) => {
+  const imports = [['React', 'react'], ['BABYLON', 'babylonjs']]
   const hasScene = params.indexOf('scene') !== -1
   const hasEngine = params.indexOf('engine') !== -1
   const hasCanvas = params.indexOf('canvas') !== -1
@@ -27,13 +27,15 @@ const template = (name, params) => {
     }
   }
   const inlineParams = params.join(', ')
+  const props = [...properties, ...params].join(', ')
   return `${imports.map(i => `import ${i[0]} from '${i[1]}'`).join('\n')}
 
 class ${name} extends React.Component {
   constructor (props) {
     super(props)
-    const { ${inlineParams} } = props
-    this.${name} = new ${name}(${inlineParams})
+    const { ${props} } = props
+    this.${name} = new BABYLON.${name}(${inlineParams})
+    ${properties.map(p => `this.${name}.${p} = ${p}`).join('\n    ')}
   }
 
   render () {
@@ -51,8 +53,10 @@ sourceFile.forEachDescendant((node, traversal) => {
     if (name[0] === '_') {
       return
     }
-    const params = node.getInstanceProperties().map(p => p.getName()).filter(p => p[0] !== '_')
+    const constructors = node.getConstructors()
+    const params = constructors.length ? constructors[0].getParameters().map(p => p.getName()) : []
+    const properties = node.getProperties().map(p => p.getName()).filter(p => p[0] !== '_')
     console.log(`${green(name)} ( ${yellow(params.join(white(', ')))} )`)
-    writeFileSync(`${__dirname}/generated/${name}.js`, template(name, params))
+    writeFileSync(`${__dirname}/generated/${name}.js`, template(name, params, properties))
   }
 })

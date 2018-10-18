@@ -1,10 +1,15 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class LensRenderingPipeline extends React.Component {
   constructor (props) {
     super(props)
-    const { LensChromaticAberrationEffect, HighlightsEnhancingEffect, LensDepthOfFieldEffect } = props
-    this.LensRenderingPipeline = new LensRenderingPipeline(LensChromaticAberrationEffect, HighlightsEnhancingEffect, LensDepthOfFieldEffect)
+    const { LensChromaticAberrationEffect, HighlightsEnhancingEffect, LensDepthOfFieldEffect, name, parameters, scene, ratio, cameras } = props
+    this.LensRenderingPipeline = new BABYLON.LensRenderingPipeline(name, parameters, scene, ratio, cameras)
+    this.LensRenderingPipeline.LensChromaticAberrationEffect = LensChromaticAberrationEffect
+    this.LensRenderingPipeline.HighlightsEnhancingEffect = HighlightsEnhancingEffect
+    this.LensRenderingPipeline.LensDepthOfFieldEffect = LensDepthOfFieldEffect
   }
 
   render () {
@@ -12,5 +17,5 @@ class LensRenderingPipeline extends React.Component {
   }
 }
 
-export default LensRenderingPipeline
+export default withScene(LensRenderingPipeline)
 

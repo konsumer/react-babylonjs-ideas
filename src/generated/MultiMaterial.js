@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class MultiMaterial extends React.Component {
   constructor (props) {
     super(props)
-    const { subMaterials } = props
-    this.MultiMaterial = new MultiMaterial(subMaterials)
+    const { subMaterials, name, scene } = props
+    this.MultiMaterial = new BABYLON.MultiMaterial(name, scene)
+    this.MultiMaterial.subMaterials = subMaterials
   }
 
   render () {
@@ -12,5 +15,5 @@ class MultiMaterial extends React.Component {
   }
 }
 
-export default MultiMaterial
+export default withScene(MultiMaterial)
 

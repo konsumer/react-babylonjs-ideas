@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PointLight extends React.Component {
   constructor (props) {
     super(props)
-    const { shadowAngle, direction } = props
-    this.PointLight = new PointLight(shadowAngle, direction)
+    const { shadowAngle, direction, name, position, scene } = props
+    this.PointLight = new BABYLON.PointLight(name, position, scene)
+    this.PointLight.shadowAngle = shadowAngle
+    this.PointLight.direction = direction
   }
 
   render () {
@@ -12,5 +16,5 @@ class PointLight extends React.Component {
   }
 }
 
-export default PointLight
+export default withScene(PointLight)
 

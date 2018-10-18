@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class SetParentAction extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.SetParentAction = new SetParentAction()
+    const { triggerOptions, target, parent, condition } = props
+    this.SetParentAction = new BABYLON.SetParentAction(triggerOptions, target, parent, condition)
+    
   }
 
   render () {

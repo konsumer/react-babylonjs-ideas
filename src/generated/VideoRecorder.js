@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class VideoRecorder extends React.Component {
   constructor (props) {
     super(props)
-    const { isRecording } = props
-    this.VideoRecorder = new VideoRecorder(isRecording)
+    const { isRecording, engine, options } = props
+    this.VideoRecorder = new BABYLON.VideoRecorder(engine, options)
+    this.VideoRecorder.isRecording = isRecording
   }
 
   render () {
@@ -12,5 +15,5 @@ class VideoRecorder extends React.Component {
   }
 }
 
-export default VideoRecorder
+export default withEngine(VideoRecorder)
 

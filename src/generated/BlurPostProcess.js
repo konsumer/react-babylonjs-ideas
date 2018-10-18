@@ -1,10 +1,16 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class BlurPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const { direction, blockCompilation, kernel, packedFloat } = props
-    this.BlurPostProcess = new BlurPostProcess(direction, blockCompilation, kernel, packedFloat)
+    const { direction, blockCompilation, kernel, packedFloat, name, direction, kernel, options, camera, samplingMode, engine, reusable, textureType, defines, blockCompilation } = props
+    this.BlurPostProcess = new BABYLON.BlurPostProcess(name, direction, kernel, options, camera, samplingMode, engine, reusable, textureType, defines, blockCompilation)
+    this.BlurPostProcess.direction = direction
+    this.BlurPostProcess.blockCompilation = blockCompilation
+    this.BlurPostProcess.kernel = kernel
+    this.BlurPostProcess.packedFloat = packedFloat
   }
 
   render () {
@@ -12,5 +18,5 @@ class BlurPostProcess extends React.Component {
   }
 }
 
-export default BlurPostProcess
+export default withEngine(BlurPostProcess)
 

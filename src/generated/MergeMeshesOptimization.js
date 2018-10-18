@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class MergeMeshesOptimization extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.MergeMeshesOptimization = new MergeMeshesOptimization()
+    const { UpdateSelectionTree } = props
+    this.MergeMeshesOptimization = new BABYLON.MergeMeshesOptimization()
+    this.MergeMeshesOptimization.UpdateSelectionTree = UpdateSelectionTree
   }
 
   render () {

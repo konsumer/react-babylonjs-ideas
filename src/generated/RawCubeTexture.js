@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class RawCubeTexture extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.RawCubeTexture = new RawCubeTexture()
+    const { scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression } = props
+    this.RawCubeTexture = new BABYLON.RawCubeTexture(scene, data, size, format, type, generateMipMaps, invertY, samplingMode, compression)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class RawCubeTexture extends React.Component {
   }
 }
 
-export default RawCubeTexture
+export default withScene(RawCubeTexture)
 

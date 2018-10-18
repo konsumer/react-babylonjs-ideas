@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class DepthRenderer extends React.Component {
   constructor (props) {
     super(props)
-    const { useOnlyInActiveCamera } = props
-    this.DepthRenderer = new DepthRenderer(useOnlyInActiveCamera)
+    const { useOnlyInActiveCamera, scene, type, camera } = props
+    this.DepthRenderer = new BABYLON.DepthRenderer(scene, type, camera)
+    this.DepthRenderer.useOnlyInActiveCamera = useOnlyInActiveCamera
   }
 
   render () {
@@ -12,5 +15,5 @@ class DepthRenderer extends React.Component {
   }
 }
 
-export default DepthRenderer
+export default withScene(DepthRenderer)
 

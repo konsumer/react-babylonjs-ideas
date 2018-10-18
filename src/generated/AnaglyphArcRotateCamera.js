@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class AnaglyphArcRotateCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.AnaglyphArcRotateCamera = new AnaglyphArcRotateCamera()
+    const { name, alpha, beta, radius, target, interaxialDistance, scene } = props
+    this.AnaglyphArcRotateCamera = new BABYLON.AnaglyphArcRotateCamera(name, alpha, beta, radius, target, interaxialDistance, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class AnaglyphArcRotateCamera extends React.Component {
   }
 }
 
-export default AnaglyphArcRotateCamera
+export default withScene(AnaglyphArcRotateCamera)
 

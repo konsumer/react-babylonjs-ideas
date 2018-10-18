@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class PassPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.PassPostProcess = new PassPostProcess()
+    const { name, options, camera, samplingMode, engine, reusable, textureType, blockCompilation } = props
+    this.PassPostProcess = new BABYLON.PassPostProcess(name, options, camera, samplingMode, engine, reusable, textureType, blockCompilation)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class PassPostProcess extends React.Component {
   }
 }
 
-export default PassPostProcess
+export default withEngine(PassPostProcess)
 

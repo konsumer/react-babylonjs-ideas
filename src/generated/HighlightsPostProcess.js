@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class HighlightsPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.HighlightsPostProcess = new HighlightsPostProcess()
+    const { name, options, camera, samplingMode, engine, reusable, textureType } = props
+    this.HighlightsPostProcess = new BABYLON.HighlightsPostProcess(name, options, camera, samplingMode, engine, reusable, textureType)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class HighlightsPostProcess extends React.Component {
   }
 }
 
-export default HighlightsPostProcess
+export default withEngine(HighlightsPostProcess)
 

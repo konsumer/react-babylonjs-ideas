@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class PredicateCondition extends React.Component {
   constructor (props) {
     super(props)
-    const { predicate } = props
-    this.PredicateCondition = new PredicateCondition(predicate)
+    const { predicate, actionManager, predicate } = props
+    this.PredicateCondition = new BABYLON.PredicateCondition(actionManager, predicate)
+    this.PredicateCondition.predicate = predicate
   }
 
   render () {

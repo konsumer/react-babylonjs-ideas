@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class EffectFallbacks extends React.Component {
   constructor (props) {
     super(props)
     const { isMoreFallbacks } = props
-    this.EffectFallbacks = new EffectFallbacks(isMoreFallbacks)
+    this.EffectFallbacks = new BABYLON.EffectFallbacks()
+    this.EffectFallbacks.isMoreFallbacks = isMoreFallbacks
   }
 
   render () {

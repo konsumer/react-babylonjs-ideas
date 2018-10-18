@@ -1,10 +1,18 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class FollowCamera extends React.Component {
   constructor (props) {
     super(props)
-    const { radius, rotationOffset, heightOffset, cameraAcceleration, maxCameraSpeed, lockedTarget } = props
-    this.FollowCamera = new FollowCamera(radius, rotationOffset, heightOffset, cameraAcceleration, maxCameraSpeed, lockedTarget)
+    const { radius, rotationOffset, heightOffset, cameraAcceleration, maxCameraSpeed, lockedTarget, name, position, scene, lockedTarget } = props
+    this.FollowCamera = new BABYLON.FollowCamera(name, position, scene, lockedTarget)
+    this.FollowCamera.radius = radius
+    this.FollowCamera.rotationOffset = rotationOffset
+    this.FollowCamera.heightOffset = heightOffset
+    this.FollowCamera.cameraAcceleration = cameraAcceleration
+    this.FollowCamera.maxCameraSpeed = maxCameraSpeed
+    this.FollowCamera.lockedTarget = lockedTarget
   }
 
   render () {
@@ -12,5 +20,5 @@ class FollowCamera extends React.Component {
   }
 }
 
-export default FollowCamera
+export default withScene(FollowCamera)
 

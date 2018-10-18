@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class MeshBuilder extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.MeshBuilder = new MeshBuilder()
+    const { updateSideOrientation } = props
+    this.MeshBuilder = new BABYLON.MeshBuilder()
+    this.MeshBuilder.updateSideOrientation = updateSideOrientation
   }
 
   render () {

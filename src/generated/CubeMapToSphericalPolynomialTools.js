@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class CubeMapToSphericalPolynomialTools extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.CubeMapToSphericalPolynomialTools = new CubeMapToSphericalPolynomialTools()
+    const { FileFaces } = props
+    this.CubeMapToSphericalPolynomialTools = new BABYLON.CubeMapToSphericalPolynomialTools()
+    this.CubeMapToSphericalPolynomialTools.FileFaces = FileFaces
   }
 
   render () {

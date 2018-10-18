@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class StereoscopicUniversalCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.StereoscopicUniversalCamera = new StereoscopicUniversalCamera()
+    const { name, position, interaxialDistance, isStereoscopicSideBySide, scene } = props
+    this.StereoscopicUniversalCamera = new BABYLON.StereoscopicUniversalCamera(name, position, interaxialDistance, isStereoscopicSideBySide, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class StereoscopicUniversalCamera extends React.Component {
   }
 }
 
-export default StereoscopicUniversalCamera
+export default withScene(StereoscopicUniversalCamera)
 

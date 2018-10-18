@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class EdgesRenderer extends React.Component {
   constructor (props) {
     super(props)
-    const { edgesWidthScalerForOrthographic, edgesWidthScalerForPerspective, isEnabled } = props
-    this.EdgesRenderer = new EdgesRenderer(edgesWidthScalerForOrthographic, edgesWidthScalerForPerspective, isEnabled)
+    const { edgesWidthScalerForOrthographic, edgesWidthScalerForPerspective, isEnabled, source, epsilon, checkVerticesInsteadOfIndices, generateEdgesLines } = props
+    this.EdgesRenderer = new BABYLON.EdgesRenderer(source, epsilon, checkVerticesInsteadOfIndices, generateEdgesLines)
+    this.EdgesRenderer.edgesWidthScalerForOrthographic = edgesWidthScalerForOrthographic
+    this.EdgesRenderer.edgesWidthScalerForPerspective = edgesWidthScalerForPerspective
+    this.EdgesRenderer.isEnabled = isEnabled
   }
 
   render () {

@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class VideoDome extends React.Component {
   constructor (props) {
     super(props)
-    const { videoTexture, fovMultiplier } = props
-    this.VideoDome = new VideoDome(videoTexture, fovMultiplier)
+    const { videoTexture, fovMultiplier, name, urlsOrVideo, options, scene } = props
+    this.VideoDome = new BABYLON.VideoDome(name, urlsOrVideo, options, scene)
+    this.VideoDome.videoTexture = videoTexture
+    this.VideoDome.fovMultiplier = fovMultiplier
   }
 
   render () {
@@ -12,5 +16,5 @@ class VideoDome extends React.Component {
   }
 }
 
-export default VideoDome
+export default withScene(VideoDome)
 

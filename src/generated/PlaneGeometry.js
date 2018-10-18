@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PlaneGeometry extends React.Component {
   constructor (props) {
     super(props)
-    const { size, side } = props
-    this.PlaneGeometry = new PlaneGeometry(size, side)
+    const { size, side, id, scene, size, canBeRegenerated, mesh, side } = props
+    this.PlaneGeometry = new BABYLON.PlaneGeometry(id, scene, size, canBeRegenerated, mesh, side)
+    this.PlaneGeometry.size = size
+    this.PlaneGeometry.side = side
   }
 
   render () {
@@ -12,5 +16,5 @@ class PlaneGeometry extends React.Component {
   }
 }
 
-export default PlaneGeometry
+export default withScene(PlaneGeometry)
 

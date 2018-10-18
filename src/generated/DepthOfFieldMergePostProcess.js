@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class DepthOfFieldMergePostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const { blurSteps } = props
-    this.DepthOfFieldMergePostProcess = new DepthOfFieldMergePostProcess(blurSteps)
+    const { blurSteps, name, originalFromInput, circleOfConfusion, blurSteps, options, camera, samplingMode, engine, reusable, textureType, blockCompilation } = props
+    this.DepthOfFieldMergePostProcess = new BABYLON.DepthOfFieldMergePostProcess(name, originalFromInput, circleOfConfusion, blurSteps, options, camera, samplingMode, engine, reusable, textureType, blockCompilation)
+    this.DepthOfFieldMergePostProcess.blurSteps = blurSteps
   }
 
   render () {
@@ -12,5 +15,5 @@ class DepthOfFieldMergePostProcess extends React.Component {
   }
 }
 
-export default DepthOfFieldMergePostProcess
+export default withEngine(DepthOfFieldMergePostProcess)
 

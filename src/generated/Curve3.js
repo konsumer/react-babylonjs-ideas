@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class Curve3 extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.Curve3 = new Curve3()
+    const { points } = props
+    this.Curve3 = new BABYLON.Curve3(points)
+    
   }
 
   render () {

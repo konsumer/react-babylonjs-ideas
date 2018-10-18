@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class RetryStrategy extends React.Component {
   constructor (props) {
     super(props)
     const {  } = props
-    this.RetryStrategy = new RetryStrategy()
+    this.RetryStrategy = new BABYLON.RetryStrategy()
+    
   }
 
   render () {

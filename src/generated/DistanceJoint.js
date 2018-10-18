@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class DistanceJoint extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.DistanceJoint = new DistanceJoint()
+    const { jointData } = props
+    this.DistanceJoint = new BABYLON.DistanceJoint(jointData)
+    
   }
 
   render () {

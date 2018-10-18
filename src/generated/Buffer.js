@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class Buffer extends React.Component {
   constructor (props) {
     super(props)
-    const { byteStride } = props
-    this.Buffer = new Buffer(byteStride)
+    const { byteStride, engine, data, updatable, stride, postponeInternalCreation, instanced, useBytes } = props
+    this.Buffer = new BABYLON.Buffer(engine, data, updatable, stride, postponeInternalCreation, instanced, useBytes)
+    this.Buffer.byteStride = byteStride
   }
 
   render () {
@@ -12,5 +15,5 @@ class Buffer extends React.Component {
   }
 }
 
-export default Buffer
+export default withEngine(Buffer)
 

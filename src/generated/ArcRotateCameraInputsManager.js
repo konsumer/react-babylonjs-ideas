@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class ArcRotateCameraInputsManager extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.ArcRotateCameraInputsManager = new ArcRotateCameraInputsManager()
+    const { camera } = props
+    this.ArcRotateCameraInputsManager = new BABYLON.ArcRotateCameraInputsManager(camera)
+    
   }
 
   render () {

@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class FreeCameraVirtualJoystickInput extends React.Component {
   constructor (props) {
     super(props)
     const { camera } = props
-    this.FreeCameraVirtualJoystickInput = new FreeCameraVirtualJoystickInput(camera)
+    this.FreeCameraVirtualJoystickInput = new BABYLON.FreeCameraVirtualJoystickInput()
+    this.FreeCameraVirtualJoystickInput.camera = camera
   }
 
   render () {

@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class TGATools extends React.Component {
   constructor (props) {
     super(props)
     const {  } = props
-    this.TGATools = new TGATools()
+    this.TGATools = new BABYLON.TGATools()
+    
   }
 
   render () {

@@ -35,7 +35,7 @@ const Sphere = (props) => {
   if (process.env.NODE_ENV === 'development') {
     console.log('Sphere', { sphere, ...props })
   }
-  return children || null
+  return children
 }
 
 export default withScene(Sphere)

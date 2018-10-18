@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PhysicsHelper extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.PhysicsHelper = new PhysicsHelper()
+    const { scene } = props
+    this.PhysicsHelper = new BABYLON.PhysicsHelper(scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class PhysicsHelper extends React.Component {
   }
 }
 
-export default PhysicsHelper
+export default withScene(PhysicsHelper)
 

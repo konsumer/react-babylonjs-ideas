@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class BoxGeometry extends React.Component {
   constructor (props) {
     super(props)
-    const { size, side } = props
-    this.BoxGeometry = new BoxGeometry(size, side)
+    const { size, side, id, scene, size, canBeRegenerated, mesh, side } = props
+    this.BoxGeometry = new BABYLON.BoxGeometry(id, scene, size, canBeRegenerated, mesh, side)
+    this.BoxGeometry.size = size
+    this.BoxGeometry.side = side
   }
 
   render () {
@@ -12,5 +16,5 @@ class BoxGeometry extends React.Component {
   }
 }
 
-export default BoxGeometry
+export default withScene(BoxGeometry)
 

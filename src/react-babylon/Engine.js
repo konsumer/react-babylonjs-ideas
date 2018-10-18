@@ -1,3 +1,4 @@
+
 import React, { Fragment, Component, createContext } from 'react'
 import BABYLON from 'babylonjs'
 
@@ -5,7 +6,14 @@ export const { Provider, Consumer } = createContext({})
 export const withEngine = Component => props => (
   <Consumer>
     {({ engine, canvas }) => {
-      return <Component engine={engine} canvas={canvas} {...props} />
+      return <Component engine={engine} {...props} />
+    }}
+  </Consumer>
+)
+export const withCanvas = Component => props => (
+  <Consumer>
+    {({ engine, canvas }) => {
+      return <Component canvas={canvas} {...props} />
     }}
   </Consumer>
 )
@@ -32,11 +40,7 @@ export default class Engine extends Component {
       })
       this.setState({ engine, canvas })
       if (process.env.NODE_ENV === 'development') {
-        console.log('Engine', {
-          canvas,
-          engine,
-          ...this.props
-        })
+        console.log('Engine', { canvas, engine, ...this.props })
       }
     }
   }

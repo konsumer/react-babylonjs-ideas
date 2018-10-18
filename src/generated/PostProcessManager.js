@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PostProcessManager extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.PostProcessManager = new PostProcessManager()
+    const { scene } = props
+    this.PostProcessManager = new BABYLON.PostProcessManager(scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class PostProcessManager extends React.Component {
   }
 }
 
-export default PostProcessManager
+export default withScene(PostProcessManager)
 

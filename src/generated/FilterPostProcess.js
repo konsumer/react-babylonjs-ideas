@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class FilterPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const { kernelMatrix } = props
-    this.FilterPostProcess = new FilterPostProcess(kernelMatrix)
+    const { kernelMatrix, name, kernelMatrix, options, camera, samplingMode, engine, reusable } = props
+    this.FilterPostProcess = new BABYLON.FilterPostProcess(name, kernelMatrix, options, camera, samplingMode, engine, reusable)
+    this.FilterPostProcess.kernelMatrix = kernelMatrix
   }
 
   render () {
@@ -12,5 +15,5 @@ class FilterPostProcess extends React.Component {
   }
 }
 
-export default FilterPostProcess
+export default withEngine(FilterPostProcess)
 

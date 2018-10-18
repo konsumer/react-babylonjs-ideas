@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class CombineAction extends React.Component {
   constructor (props) {
     super(props)
-    const { children } = props
-    this.CombineAction = new CombineAction(children)
+    const { children, triggerOptions, children, condition } = props
+    this.CombineAction = new BABYLON.CombineAction(triggerOptions, children, condition)
+    this.CombineAction.children = children
   }
 
   render () {

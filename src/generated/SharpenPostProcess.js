@@ -1,10 +1,14 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class SharpenPostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const { colorAmount, edgeAmount } = props
-    this.SharpenPostProcess = new SharpenPostProcess(colorAmount, edgeAmount)
+    const { colorAmount, edgeAmount, name, options, camera, samplingMode, engine, reusable, textureType, blockCompilation } = props
+    this.SharpenPostProcess = new BABYLON.SharpenPostProcess(name, options, camera, samplingMode, engine, reusable, textureType, blockCompilation)
+    this.SharpenPostProcess.colorAmount = colorAmount
+    this.SharpenPostProcess.edgeAmount = edgeAmount
   }
 
   render () {
@@ -12,5 +16,5 @@ class SharpenPostProcess extends React.Component {
   }
 }
 
-export default SharpenPostProcess
+export default withEngine(SharpenPostProcess)
 

@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class Condition extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.Condition = new Condition()
+    const { actionManager } = props
+    this.Condition = new BABYLON.Condition(actionManager)
+    
   }
 
   render () {

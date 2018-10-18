@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class Path3D extends React.Component {
   constructor (props) {
     super(props)
-    const { path } = props
-    this.Path3D = new Path3D(path)
+    const { path, path, firstNormal, raw } = props
+    this.Path3D = new BABYLON.Path3D(path, firstNormal, raw)
+    this.Path3D.path = path
   }
 
   render () {

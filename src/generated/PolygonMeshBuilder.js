@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PolygonMeshBuilder extends React.Component {
   constructor (props) {
     super(props)
-    const { addSide } = props
-    this.PolygonMeshBuilder = new PolygonMeshBuilder(addSide)
+    const { addSide, name, contours, scene } = props
+    this.PolygonMeshBuilder = new BABYLON.PolygonMeshBuilder(name, contours, scene)
+    this.PolygonMeshBuilder.addSide = addSide
   }
 
   render () {
@@ -12,5 +15,5 @@ class PolygonMeshBuilder extends React.Component {
   }
 }
 
-export default PolygonMeshBuilder
+export default withScene(PolygonMeshBuilder)
 

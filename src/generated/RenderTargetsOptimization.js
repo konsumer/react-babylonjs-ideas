@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class RenderTargetsOptimization extends React.Component {
   constructor (props) {
     super(props)
     const {  } = props
-    this.RenderTargetsOptimization = new RenderTargetsOptimization()
+    this.RenderTargetsOptimization = new BABYLON.RenderTargetsOptimization()
+    
   }
 
   render () {

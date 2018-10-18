@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class BackEase extends React.Component {
   constructor (props) {
     super(props)
-    const { amplitude } = props
-    this.BackEase = new BackEase(amplitude)
+    const { amplitude, amplitude } = props
+    this.BackEase = new BABYLON.BackEase(amplitude)
+    this.BackEase.amplitude = amplitude
   }
 
   render () {

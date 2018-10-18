@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class DDSTools extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.DDSTools = new DDSTools()
+    const { StoreLODInAlphaChannel } = props
+    this.DDSTools = new BABYLON.DDSTools()
+    this.DDSTools.StoreLODInAlphaChannel = StoreLODInAlphaChannel
   }
 
   render () {

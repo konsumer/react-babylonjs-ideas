@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class AnaglyphFreeCamera extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.AnaglyphFreeCamera = new AnaglyphFreeCamera()
+    const { name, position, interaxialDistance, scene } = props
+    this.AnaglyphFreeCamera = new BABYLON.AnaglyphFreeCamera(name, position, interaxialDistance, scene)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class AnaglyphFreeCamera extends React.Component {
   }
 }
 
-export default AnaglyphFreeCamera
+export default withScene(AnaglyphFreeCamera)
 

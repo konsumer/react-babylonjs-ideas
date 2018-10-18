@@ -1,10 +1,12 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
 
 class HingeJoint extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.HingeJoint = new HingeJoint()
+    const { jointData } = props
+    this.HingeJoint = new BABYLON.HingeJoint(jointData)
+    
   }
 
   render () {

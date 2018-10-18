@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withEngine } from './Engine'
 
 class BlackAndWhitePostProcess extends React.Component {
   constructor (props) {
     super(props)
-    const { degree } = props
-    this.BlackAndWhitePostProcess = new BlackAndWhitePostProcess(degree)
+    const { degree, name, options, camera, samplingMode, engine, reusable } = props
+    this.BlackAndWhitePostProcess = new BABYLON.BlackAndWhitePostProcess(name, options, camera, samplingMode, engine, reusable)
+    this.BlackAndWhitePostProcess.degree = degree
   }
 
   render () {
@@ -12,5 +15,5 @@ class BlackAndWhitePostProcess extends React.Component {
   }
 }
 
-export default BlackAndWhitePostProcess
+export default withEngine(BlackAndWhitePostProcess)
 

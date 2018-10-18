@@ -1,10 +1,13 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class ShaderMaterial extends React.Component {
   constructor (props) {
     super(props)
-    const {  } = props
-    this.ShaderMaterial = new ShaderMaterial()
+    const { name, scene, shaderPath, options } = props
+    this.ShaderMaterial = new BABYLON.ShaderMaterial(name, scene, shaderPath, options)
+    
   }
 
   render () {
@@ -12,5 +15,5 @@ class ShaderMaterial extends React.Component {
   }
 }
 
-export default ShaderMaterial
+export default withScene(ShaderMaterial)
 

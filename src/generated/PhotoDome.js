@@ -1,10 +1,15 @@
 import React from 'react'
+import BABYLON from 'babylonjs'
+import { withScene } from './Scene'
 
 class PhotoDome extends React.Component {
   constructor (props) {
     super(props)
-    const { photoTexture, onLoadErrorObservable, fovMultiplier } = props
-    this.PhotoDome = new PhotoDome(photoTexture, onLoadErrorObservable, fovMultiplier)
+    const { photoTexture, onLoadErrorObservable, fovMultiplier, name, urlOfPhoto, options, scene, onError } = props
+    this.PhotoDome = new BABYLON.PhotoDome(name, urlOfPhoto, options, scene, onError)
+    this.PhotoDome.photoTexture = photoTexture
+    this.PhotoDome.onLoadErrorObservable = onLoadErrorObservable
+    this.PhotoDome.fovMultiplier = fovMultiplier
   }
 
   render () {
@@ -12,5 +17,5 @@ class PhotoDome extends React.Component {
   }
 }
 
-export default PhotoDome
+export default withScene(PhotoDome)
 
