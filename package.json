@@ -19,5 +19,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "chalk": "^2.4.1",
+    "ts-simple-ast": "^17.1.0"
+  }
 }

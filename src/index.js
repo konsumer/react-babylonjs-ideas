@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import BABYLON from 'babylonjs'
+
 import './styles.css'
 
 import Engine from './react-babylon/Engine'
@@ -8,6 +10,8 @@ import Scene from './react-babylon/Scene'
 import FreeCamera from './react-babylon/FreeCamera'
 import HemisphericLight from './react-babylon/HemisphericLight'
 import Sphere from './react-babylon/Sphere'
+
+console.log('BABYLON', BABYLON)
 
 function App () {
   return (
