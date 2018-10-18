@@ -3,23 +3,25 @@ import ReactDOM from 'react-dom'
 
 import './styles.css'
 
-import Engine from './react-babylon/Engine'
-import Scene from './react-babylon/Scene'
-import FreeCamera from './react-babylon/FreeCamera'
-import HemisphericLight from './react-babylon/HemisphericLight'
-import Sphere from './react-babylon/Sphere'
+import {
+  Engine,
+  Scene,
+  FreeCamera,
+  HemisphericLight,
+  Sphere
+} from './react-babylon'
 
-function App () {
+function Demo () {
   return (
     <Engine>
-      <Scene debug>
+      <Scene>
         <Sphere name='player' />
         <FreeCamera name='camera1' y={5} z={-10} target='player' />
-        <HemisphericLight name='light1' intensity={0.7} />
+        <HemisphericLight name='light1' intensity={0.7} direction='up' />
       </Scene>
     </Engine>
   )
 }
 
 const rootElement = document.getElementById('root')
-ReactDOM.render(<App />, rootElement)
+ReactDOM.render(<Demo />, rootElement)

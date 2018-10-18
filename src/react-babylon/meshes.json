@@ -1,0 +1,22 @@
+{
+  "Box": "Box",
+  "Cylinder": "Cylinder",
+  "DashedLines": "DashedLines",
+  "Decal": "Decal",
+  "Disc": "Disc",
+  "Ground": "Ground",
+  "GroundFromHeightMap": "GroundFromHeightMap",
+  "IcoSphere": "IcoSphere",
+  "Lathe": "Lathe",
+  "Lines": "Lines",
+  "LineSystem": "LineSystem",
+  "Plane": "Plane",
+  "Polygon": "Polygon",
+  "Polyhedron": "Polyhedron",
+  "Ribbon": "Ribbon",
+  "Sphere": "Sphere",
+  "TiledGround": "TiledGround",
+  "Torus": "Torus",
+  "TorusKnot": "TorusKnot",
+  "Tube": "Tube"
+}

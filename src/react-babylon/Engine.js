@@ -1,80 +1,58 @@
-
-import React, { Fragment, Component, createContext } from 'react'
+import React, { Component } from 'react'
 import BABYLON from 'babylonjs'
 
-export const { Provider, Consumer } = createContext({})
-export const withEngine = Component => props => (
-  <Consumer>
-    {({ engine, canvas }) => {
-      return <Component engine={engine} {...props} />
-    }}
-  </Consumer>
-)
-export const withCanvas = Component => props => (
-  <Consumer>
-    {({ engine, canvas }) => {
-      return <Component canvas={canvas} {...props} />
-    }}
-  </Consumer>
-)
+import { EngineProvider } from './EngineContext'
+import { render, unmount } from './render'
 
-export default class Engine extends Component {
-  state = {
-    canvas: null,
-    engine: null
-  }
+// This could all be done in render, but I want to make it simple to use scene/engine/canvas in normal react ways, with context
 
-  onCanvasLoaded = canvas => {
-    if (canvas) {
-      canvas.addEventListener('resize', this.onResizeWindow)
-      const engine = new BABYLON.Engine(
-        canvas,
-        true,
-        this.props.engineOptions,
-        this.props.adaptToDeviceRatio
-      )
-      engine.runRenderLoop(() => {
-        engine.scenes.forEach(scene => {
-          scene.render()
-        })
+// TODO: more engine/canvas options
+
+export class Engine extends Component {
+  componentDidMount () {
+    this._engine = new BABYLON.Engine(
+      this._canvas,
+      true
+    )
+    this._engine.runRenderLoop(() => {
+      this._engine.scenes.forEach(scene => {
+        scene.render()
       })
-      this.setState({ engine, canvas })
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Engine', { canvas, engine, ...this.props })
-      }
-    }
+    })
+    window.addEventListener('resize', this.onResizeWindow)
+    const { props, state } = this
+    console.log('Engine.componentDidMount', { props, state })
+    render(
+      <EngineProvider value={{ engine: this._engine, canvas: this._canvas }}>
+        {this.props.children}
+      </EngineProvider>,
+      { engine: this._engine, canvas: this._canvas }
+    )
   }
 
-  onResizeWindow = () => {
-    if (this.state.engine) {
-      this.state.engine.resize()
-    }
+  componentDidUpdate (prevProps, prevState) {
+    const { props, state } = this
+    console.log('Engine.componentDidUpdate', { props, state, prevProps, prevState })
+    render(
+      <EngineProvider value={{ engine: this._engine, canvas: this._canvas }}>
+        {this.props.children}
+      </EngineProvider>,
+      { engine: this._engine, canvas: this._canvas }
+    )
   }
 
   componentWillUnmount () {
-    if (this.canvas) {
-      this.canvas.removeEventListener('resize', this.onResizeWindow)
-    }
+    window.removeEventListener('resize', this.onResizeWindow)
+    unmount()
   }
 
   render () {
-    const { width, height, children = null } = this.props
-    const opts = {}
-    if (width !== undefined && height !== undefined) {
-      opts.width = width
-      opts.height = height
+    return <canvas ref={ref => (this._canvas = ref)} style={{ height: '100%', width: '100%' }} />
+  }
+
+  onResizeWindow = () => {
+    if (this._engine) {
+      this._engine.resize()
     }
-    return (
-      <Fragment>
-        <canvas {...opts} ref={this.onCanvasLoaded} />
-        {this.state.engine && (
-          <Provider
-            value={{ engine: this.state.engine, canvas: this.state.canvas }}
-          >
-            {children}
-          </Provider>
-        )}
-      </Fragment>
-    )
   }
 }
