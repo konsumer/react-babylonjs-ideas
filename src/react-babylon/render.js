@@ -30,6 +30,8 @@ export const validTag = tag => {
   }
 }
 
+// TODO: add developer-tools stuff to improve use of that
+
 export const hostConfig = {
   supportsMutation: true,
 
@@ -55,15 +57,18 @@ export const hostConfig = {
 
     // TODO: check props based on pre-computed static code-analysis of babylonjs
     // For now, I just harcoded the stuff in the demo-code
+    // these could also use other prop-helpers to make the components nicer to work with
 
     if (family === 'meshes') {
-      const { name, ...options } = props
-      return BABYLON.MeshBuilder[`Create${type}`](name, options, scene)
+      const { name, x = 0, y = 0, z = 0, ...options } = props
+      const mesh = BABYLON.MeshBuilder[`Create${type}`](name, options, scene)
+      mesh.position = new BABYLON.Vector3(x, y, z)
+      return mesh
     }
 
     if (type === 'FreeCamera') {
       const { name, x = 0, y = 0, z = 0, setActiveOnSceneIfNoneActive = true, target, ...options } = props
-      const camera = new BABYLON.FreeCamera(name, new BABYLON.Vector3(x || 0, y || 0, z || 0), scene, setActiveOnSceneIfNoneActive)
+      const camera = new BABYLON.FreeCamera(name, new BABYLON.Vector3(x, y, z), scene, setActiveOnSceneIfNoneActive)
 
       // TODO: no checks of props, refactor when this is auto-generated
       Object.keys(options).forEach(k => {
