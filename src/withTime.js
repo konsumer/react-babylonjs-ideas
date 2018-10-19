@@ -22,7 +22,9 @@ class Timer extends PureComponent {
   }
 
   componentWillMount () {
-    this.intervalId = setInterval(this.tick, this.props.interval)
+    if (!this.intervalId) {
+      this.intervalId = setInterval(this.tick, this.props.interval)
+    }
   }
 
   componentWillUnount () {

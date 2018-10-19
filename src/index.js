@@ -51,7 +51,7 @@ const DemoScene = withTime(({ time }) => {
 function Demo () {
   return (
     <Engine>
-      <DemoScene interval={1} />
+      <DemoScene interval={500} />
     </Engine>
   )
 }
