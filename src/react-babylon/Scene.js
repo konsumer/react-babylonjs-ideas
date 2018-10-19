@@ -7,8 +7,6 @@ import { SceneProvider } from './SceneContext'
 
 // This could all be done in render, but I want to make it simple to use scene/engine/canvas in normal react ways, with context
 
-// TODO: more scene-options
-// TODO: handle name prop, so it can be grabbed from anywhere in code
 // TODO: handle skip prop, so you can load scenes but skip render
 // TODO: work out shadows
 

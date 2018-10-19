@@ -37,6 +37,11 @@ export const hostConfig = {
 
   now: Date.now,
 
+  // this enables refs
+  getPublicInstance: (element) => {
+    return element
+  },
+
   getRootHostContext: () => {
     return {}
   },
@@ -54,7 +59,7 @@ export const hostConfig = {
     invariant(family, '%s tag not supported by ReactBabylon.', type)
     const definition = components[type]
 
-    // console.log(type, { definition, props, scene, canvas, engine })
+    console.log(type, { definition, props, scene, canvas, engine })
 
     // TODO: check props based on pre-computed static code-analysis of babylonjs
     // these could also use other prop-helpers to make the components nicer to work with
