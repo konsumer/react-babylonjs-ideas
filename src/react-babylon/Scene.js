@@ -10,13 +10,17 @@ import { SceneProvider } from './SceneContext'
 // TODO: more scene-options
 // TODO: handle name prop, so it can be grabbed from anywhere in code
 // TODO: handle skip prop, so you can load scenes but skip render
+// TODO: work out shadows
 
 class _Scene extends Component {
   componentWillMount () {
-    const { engine } = this.props
+    const { engine, ...options } = this.props
     invariant(engine, 'Scene requires a parent <Engine>.')
     this._scene = new BABYLON.Scene(engine)
     console.log('Scene', { ...this.props, scene: this._scene })
+    Object.keys(options).forEach(o => {
+      this._scene[o] = options[o]
+    })
   }
 
   componentWillUnmount () {

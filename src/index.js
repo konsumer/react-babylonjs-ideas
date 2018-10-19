@@ -3,27 +3,44 @@ import ReactDOM from 'react-dom'
 
 import './styles.css'
 
+import BABYLON from 'babylonjs'
+
 import {
   Engine,
   Scene,
-  FreeCamera,
+  FollowCamera,
   HemisphericLight,
   Sphere,
-  Box
+  Box,
+  StandardMaterial
 } from './react-babylon'
 
 import withTime from './withTime'
 
+// TODO: chnaging material children in meshes doesn't work
+
 // this illustrates that stuff can load from seperate components
 const DemoScene = withTime(({ time }) => {
-  const x = Math.floor(Math.random() * 20)
+  const x = (time / 1000) % 8
   return (
-    <Scene>
-      <Box x={2} name='cube1' />
-      <Box x={4} name='cube2' />
-      <Box x={6} name='cube3' />
-      <Sphere x={x} />
-      <FreeCamera name='camera1' y={5} z={-10} target='cube1' />
+    <Scene clearColor={BABYLON.Color3.Black()}>
+      <Box x={2}>
+        <StandardMaterial diffuseColor={BABYLON.Color3.Green()} />
+      </Box>
+      <Box x={4}>
+        <StandardMaterial diffuseColor={BABYLON.Color3.Blue()} />
+      </Box>
+      <Box x={6} />
+      <Sphere x={x} name='player'>
+        <StandardMaterial diffuseColor={BABYLON.Color3.Red()} />
+      </Sphere>
+      <FollowCamera
+        name='camera1'
+        target='player'
+        heightOffset={10}
+        cameraAcceleration={0.005}
+        maxCameraSpeed={10}
+      />
       <HemisphericLight name='light1' intensity={0.7} direction='up' />
     </Scene>
   )
@@ -34,7 +51,7 @@ const DemoScene = withTime(({ time }) => {
 function Demo () {
   return (
     <Engine>
-      <DemoScene interval={100} />
+      <DemoScene interval={1} />
     </Engine>
   )
 }

@@ -3,16 +3,9 @@ import invariant from 'fbjs/lib/invariant'
 import BABYLON from 'babylonjs'
 import { shallowEqual } from 'shallow-equal-object'
 
-import cameras from './cameras.json'
-import lights from './lights.json'
-import meshes from './meshes.json'
+import components from './components'
 
-const tags = {
-  cameras: Object.values(cameras),
-  lights: Object.values(lights),
-  meshes: Object.values(meshes)
-}
-
+// string to vector mapping for directions
 const directions = {
   up: BABYLON.Vector3.Up,
   down: BABYLON.Vector3.Down,
@@ -23,15 +16,21 @@ const directions = {
 }
 
 // check if tag is known, get family
-export const validTag = tag => {
-  for (let t in tags) {
-    if (tags[t].find(it => it === tag)) {
-      return t
+export const validTag = tag => components[tag] && components[tag].family
+
+// dynamically get a Babylon object with args & props setup
+export const getBabylon = (definition, options) => {
+  const args = definition.args.map(a => options[a])
+  const thing = new BABYLON[definition.name](...args)
+  definition.props.forEach(p => {
+    if (typeof options[p] !== 'undefined' && args.indexOf(p) === -1) {
+      thing[p] = options[p]
     }
-  }
+  })
+  return thing
 }
 
-// TODO: add developer-tools stuff to improve use of that
+// TODO: add developer-tools stuff so it looks better in React panel
 
 export const hostConfig = {
   supportsMutation: true,
@@ -50,45 +49,52 @@ export const hostConfig = {
     return true
   },
 
-  createInstance: (type, { scene, ...props }, { canvas, engine }) => {
+  createInstance: (type, { scene, ...props }, { canvas, engine, ...other }, ...more) => {
     const family = validTag(type)
     invariant(family, '%s tag not supported by ReactBabylon.', type)
+    const definition = components[type]
 
-    console.log(type, { props, family, scene, engine, canvas })
+    // console.log(type, { definition, props, scene, canvas, engine })
 
     // TODO: check props based on pre-computed static code-analysis of babylonjs
-    // For now, I just harcoded the stuff in the demo-code
     // these could also use other prop-helpers to make the components nicer to work with
 
     if (family === 'meshes') {
-      const { name, x = 0, y = 0, z = 0, ...options } = props
+      const { name, x = 0, y = 0, z = 0, position, ...options } = props
       const mesh = BABYLON.MeshBuilder[`Create${type}`](name, options, scene)
-      mesh.position = new BABYLON.Vector3(x, y, z)
+      mesh.position = position || new BABYLON.Vector3(x, y, z)
+      mesh.family = family
       return mesh
     }
 
-    if (type === 'FreeCamera') {
-      const { name, x = 0, y = 0, z = 0, setActiveOnSceneIfNoneActive = true, target, ...options } = props
-      const camera = new BABYLON.FreeCamera(name, new BABYLON.Vector3(x, y, z), scene, setActiveOnSceneIfNoneActive)
-
-      // TODO: no checks of props, refactor when this is auto-generated
-      Object.keys(options).forEach(k => {
-        camera[k] = options[k]
-      })
-
+    if (family === 'cameras') {
+      const { x = 0, y = 0, z = 0, position, target, ...options } = props
+      options.position = position || new BABYLON.Vector3(x, y, z)
       if (target) {
-        camera.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target).position : target
+        if (type === 'FollowCamera') {
+          options.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target) : target
+        } else {
+          options.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target).position : target
+        }
       }
-
+      const camera = getBabylon(definition, { ...options, scene, canvas, engine })
       camera.attachControl(canvas)
+      camera.family = family
       return camera
     }
 
-    if (type === 'HemisphericLight') {
+    if (family === 'lights') {
       const { name, direction = BABYLON.Vector3.Up() } = props
       const dir = typeof direction === 'string' ? directions[direction.toLowerCase()]() : direction
       const light = new BABYLON.HemisphericLight(name, dir, scene)
+      light.family = family
       return light
+    }
+
+    if (family === 'materials') {
+      const material = getBabylon(definition, { ...props, scene, canvas, engine })
+      material.family = family
+      return material
     }
 
     console.error(`TODO: ${type} needs to be turned into a BABYLON instantiater in renderer.`)
@@ -98,12 +104,16 @@ export const hostConfig = {
 
   resetAfterCommit: () => {},
 
-  appendInitialChild: (parent, child) => {},
-
-  appendChild (parent, child) {},
-
-  finalizeInitialChildren: (element, type, props) => {
+  appendInitialChild: (parent, child) => {
+    if (parent && child && parent.family === 'meshes' && child.family === 'materials') {
+      parent.material = child
+    }
   },
+
+  appendChild (parent, child) {
+  },
+
+  finalizeInitialChildren: (element, type, props) => {},
 
   appendChildToContainer: (parent, child) => {},
 
@@ -125,9 +135,9 @@ export const hostConfig = {
 
   removeChild (parentInstance, child) {},
 
-  // These 3 might be used later for text-node content
+  // text-content nodes are not used
   shouldSetTextContent: (type, props) => {
-    return typeof props.children === 'string' || typeof props.children === 'number'
+    return false
   },
   createTextInstance: text => {},
   commitTextUpdate (textInstance, oldText, newText) {}

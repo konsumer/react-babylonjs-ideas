@@ -1,8 +1,0 @@
-{
-  "DirectionalLight": "DirectionalLight",
-  "HemisphericLight": "HemisphericLight",
-  "PointLight": "PointLight",
-  "ShadowLight": "ShadowLight",
-  "SpotLight": "SpotLight",
-  "VolumetricLight": "VolumetricLight"
-}

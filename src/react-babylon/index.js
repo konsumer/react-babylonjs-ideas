@@ -4,10 +4,9 @@ export { EngineContext, EngineProvider, EngineConsumer, withEngine, withCanvas }
 export { Scene } from './Scene'
 export { SceneContext, SceneProvider, SceneConsumer, withScene } from './SceneContext'
 
-// TODO: create these with pre-computed static code-analysis of babylonjs
+// auto-generated type-info
 // TODO: eventually add more here
-export * from './cameras.json'
-export * from './lights.json'
-export * from './meshes.json'
+export { default as components } from './components.json'
+export * from './tags.json'
 
 export { render } from './render'
