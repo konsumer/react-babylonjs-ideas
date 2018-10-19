@@ -21,7 +21,7 @@ export class Engine extends Component {
     })
     window.addEventListener('resize', this.onResizeWindow)
     const { props, state } = this
-    console.log('Engine.componentDidMount', { props, state })
+    console.log('Engine', { props, state })
     render(
       <EngineProvider value={{ engine: this._engine, canvas: this._canvas }}>
         {this.props.children}
@@ -32,7 +32,7 @@ export class Engine extends Component {
 
   componentDidUpdate (prevProps, prevState) {
     const { props, state } = this
-    console.log('Engine.componentDidUpdate', { props, state, prevProps, prevState })
+    console.log('Engine', { props, state, prevProps, prevState })
     render(
       <EngineProvider value={{ engine: this._engine, canvas: this._canvas }}>
         {this.props.children}

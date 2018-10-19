@@ -9,3 +9,5 @@ export { SceneContext, SceneProvider, SceneConsumer, withScene } from './SceneCo
 export * from './cameras.json'
 export * from './lights.json'
 export * from './meshes.json'
+
+export { render } from './render'

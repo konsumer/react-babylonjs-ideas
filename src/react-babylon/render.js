@@ -1,6 +1,7 @@
 import ReactReconciler from 'react-reconciler'
 import invariant from 'fbjs/lib/invariant'
 import BABYLON from 'babylonjs'
+import { shallowEqual } from 'shallow-equal-object'
 
 import cameras from './cameras.json'
 import lights from './lights.json'
@@ -53,7 +54,7 @@ export const hostConfig = {
     const family = validTag(type)
     invariant(family, '%s tag not supported by ReactBabylon.', type)
 
-    console.log('createInstance', { type, props, family, scene, engine, canvas })
+    console.log(type, { props, family, scene, engine, canvas })
 
     // TODO: check props based on pre-computed static code-analysis of babylonjs
     // For now, I just harcoded the stuff in the demo-code
@@ -101,11 +102,26 @@ export const hostConfig = {
 
   appendChild (parent, child) {},
 
-  finalizeInitialChildren: (element, type, props) => {},
+  finalizeInitialChildren: (element, type, props) => {
+  },
 
   appendChildToContainer: (parent, child) => {},
 
-  commitUpdate (element, updatePayload, type, oldProps, newProps) {},
+  commitUpdate (element, updatePayload, type, oldProps, newProps) {
+    const family = validTag(type)
+    // TODO: check props based on pre-computed static code-analysis of babylonjs
+
+    if (family === 'meshes') {
+      if (!shallowEqual(oldProps, newProps)) {
+        const { x = 0, y = 0, z = 0, ...props } = newProps
+        element.position = new BABYLON.Vector3(x, y, z)
+
+        Object.keys(props).forEach(k => {
+          element[k] = props[k]
+        })
+      }
+    }
+  },
 
   removeChild (parentInstance, child) {},
 
