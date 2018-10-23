@@ -6,23 +6,20 @@ class _BeforeRender extends Component {
     delta: 0
   }
 
-  defaultProps = {
-    handler: delta => {}
-  }
-
   updateDelta = () => {
-    this.setState({ delta: Date.now() })
+    this.setState({ delta: Date.now() - this.original })
   }
 
-  componentWillMount() {
+  componentWillMount () {
+    this.original = Date.now()
     this.props.scene.onBeforeRenderObservable.add(this.updateDelta)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.scene.onBeforeRenderObservable.remove(this.updateDelta)
   }
 
-  render() {
+  render () {
     return this.props.children(this.props.handler(this.state.delta))
   }
 }

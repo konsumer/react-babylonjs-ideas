@@ -126,15 +126,14 @@ export const hostConfig = {
     const family = validTag(type)
     // TODO: check props based on pre-computed static code-analysis of babylonjs
 
-    if (family === 'meshes') {
-      if (!shallowEqual(oldProps, newProps)) {
-        const { x = 0, y = 0, z = 0, ...props } = newProps
+    if (!shallowEqual(oldProps, newProps)) {
+      if (family === 'meshes') {
+        const { x = 0, y = 0, z = 0 } = newProps
         element.position = new BABYLON.Vector3(x, y, z)
-
-        Object.keys(props).forEach(k => {
-          element[k] = props[k]
-        })
       }
+      Object.keys(newProps).forEach(k => {
+        element[k] = newProps[k]
+      })
     }
   },
 
