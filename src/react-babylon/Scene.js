@@ -11,24 +11,26 @@ import { SceneProvider } from './SceneContext'
 // TODO: work out shadows
 
 class _Scene extends Component {
-  componentWillMount () {
+  componentWillMount() {
     const { engine, ...options } = this.props
     invariant(engine, 'Scene requires a parent <Engine>.')
     this._scene = new BABYLON.Scene(engine)
-    console.log('Scene', { ...this.props, scene: this._scene })
     Object.keys(options).forEach(o => {
       this._scene[o] = options[o]
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._scene.dispose()
   }
 
-  render () {
+  render() {
     return (
       <SceneProvider value={{ scene: this._scene }}>
-        {React.Children.map(this.props.children, child => React.cloneElement(child, { scene: this._scene })) || null}
+        {/* this is a hack to give children scene, even if they don't use SceneConsumer */}
+        {React.Children.map(this.props.children, child =>
+          React.cloneElement(child, { scene: this._scene })
+        ) || null}
       </SceneProvider>
     )
   }

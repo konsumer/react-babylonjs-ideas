@@ -15,9 +15,6 @@ const directions = {
   backward: BABYLON.Vector3.Backward
 }
 
-// check if tag is known, get family
-export const validTag = tag => components[tag] && components[tag].family
-
 // dynamically get a Babylon object with args & props setup
 export const getBabylon = (definition, options) => {
   const args = definition.args.map(a => options[a])
@@ -38,7 +35,7 @@ export const hostConfig = {
   now: Date.now,
 
   // this enables refs
-  getPublicInstance: (element) => {
+  getPublicInstance: element => {
     return element
   },
 
@@ -50,16 +47,19 @@ export const hostConfig = {
     return {}
   },
 
-  prepareUpdate (element, oldProps, newProps) {
+  prepareUpdate(element, oldProps, newProps) {
     return true
   },
 
-  createInstance: (type, { scene, ...props }, { canvas, engine, ...other }, ...more) => {
-    const family = validTag(type)
-    invariant(family, '%s tag not supported by ReactBabylon.', type)
+  createInstance: (
+    type,
+    { scene, ...props },
+    { canvas, engine, ...other },
+    ...more
+  ) => {
     const definition = components[type]
-
-    console.log(type, { definition, props, scene, canvas, engine })
+    invariant(definition, '%s tag not supported by ReactBabylon.', type)
+    const family = definition.family
 
     // TODO: check props based on pre-computed static code-analysis of babylonjs
     // these could also use other prop-helpers to make the components nicer to work with
@@ -77,12 +77,22 @@ export const hostConfig = {
       options.position = position || new BABYLON.Vector3(x, y, z)
       if (target) {
         if (type === 'FollowCamera') {
-          options.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target) : target
+          options.lockedTarget =
+            typeof target === 'string' ? scene.getMeshByName(target) : target
         } else {
-          options.lockedTarget = typeof target === 'string' ? scene.getMeshByName(target).position : target
+          options.lockedTarget =
+            typeof target === 'string'
+              ? scene.getMeshByName(target).position
+              : target
         }
       }
-      const camera = getBabylon(definition, { ...options, scene, canvas, engine })
+
+      const camera = getBabylon(definition, {
+        ...options,
+        scene,
+        canvas,
+        engine
+      })
       camera.attachControl(canvas)
       camera.family = family
       return camera
@@ -90,19 +100,29 @@ export const hostConfig = {
 
     if (family === 'lights') {
       const { name, direction = BABYLON.Vector3.Up() } = props
-      const dir = typeof direction === 'string' ? directions[direction.toLowerCase()]() : direction
+      const dir =
+        typeof direction === 'string'
+          ? directions[direction.toLowerCase()]()
+          : direction
       const light = new BABYLON.HemisphericLight(name, dir, scene)
       light.family = family
       return light
     }
 
     if (family === 'materials') {
-      const material = getBabylon(definition, { ...props, scene, canvas, engine })
+      const material = getBabylon(definition, {
+        ...props,
+        scene,
+        canvas,
+        engine
+      })
       material.family = family
       return material
     }
 
-    console.error(`TODO: ${type} needs to be turned into a BABYLON instantiater in renderer.`)
+    console.error(
+      `TODO: ${type} needs to be turned into a BABYLON instantiater in renderer.`
+    )
   },
 
   prepareForCommit: () => {},
@@ -110,26 +130,30 @@ export const hostConfig = {
   resetAfterCommit: () => {},
 
   appendInitialChild: (parent, child) => {
-    if (parent && child && parent.family === 'meshes' && child.family === 'materials') {
+    if (
+      parent &&
+      child &&
+      parent.family === 'meshes' &&
+      child.family === 'materials'
+    ) {
       parent.material = child
     }
   },
 
-  appendChild (parent, child) {
-  },
+  appendChild(parent, child) {},
 
   finalizeInitialChildren: (element, type, props) => {},
 
   appendChildToContainer: (parent, child) => {},
 
-  commitUpdate (element, updatePayload, type, oldProps, newProps) {
-    const family = validTag(type)
+  commitUpdate(element, updatePayload, type, oldProps, newProps) {
     // TODO: check props based on pre-computed static code-analysis of babylonjs
 
     if (!shallowEqual(oldProps, newProps)) {
-      if (family === 'meshes') {
+      if (element.family === 'meshes') {
         const { x = 0, y = 0, z = 0 } = newProps
-        element.position = new BABYLON.Vector3(x, y, z)
+        element.position =
+          x | y | z ? new BABYLON.Vector3(x, y, z) : element.position
       }
       Object.keys(newProps).forEach(k => {
         element[k] = newProps[k]
@@ -137,28 +161,33 @@ export const hostConfig = {
     }
   },
 
-  removeChild (parentInstance, child) {},
+  removeChild(parentInstance, child) {},
 
   // text-content nodes are not used
   shouldSetTextContent: (type, props) => {
     return false
   },
   createTextInstance: text => {},
-  commitTextUpdate (textInstance, oldText, newText) {}
+  commitTextUpdate(textInstance, oldText, newText) {}
 }
 
 const ReactReconcilerInst = ReactReconciler(hostConfig)
 
-export function render (reactElement, element, callback) {
+export function render(reactElement, element, callback) {
   // Create a root Container if it doesnt exist
   if (!element._rootContainer) {
     element._rootContainer = ReactReconcilerInst.createContainer(element, false)
   }
 
   // update the root Container
-  return ReactReconcilerInst.updateContainer(reactElement, element._rootContainer, null, callback)
+  return ReactReconcilerInst.updateContainer(
+    reactElement,
+    element._rootContainer,
+    null,
+    callback
+  )
 }
 
-export function unmount (...args) {
+export function unmount(...args) {
   console.log('UNMOUNT', args)
 }

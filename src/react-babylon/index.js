@@ -19,7 +19,6 @@ export { BeforeRender, withBeforeRender } from './BeforeRender'
 
 // auto-generated type-info
 // TODO: eventually add more here
-export { default as components } from './components.json'
 export * from './tags.json'
 
 export { render } from './render'

@@ -9,11 +9,8 @@ import { render, unmount } from './render'
 // TODO: more engine/canvas options
 
 export class Engine extends Component {
-  componentDidMount () {
-    this._engine = new BABYLON.Engine(
-      this._canvas,
-      true
-    )
+  componentDidMount() {
+    this._engine = new BABYLON.Engine(this._canvas, true)
     this._engine.runRenderLoop(() => {
       this._engine.scenes.forEach(scene => {
         scene.render()
@@ -21,7 +18,6 @@ export class Engine extends Component {
     })
     window.addEventListener('resize', this.onResizeWindow)
     const { props, state } = this
-    console.log('Engine', { props, state })
     render(
       <EngineProvider value={{ engine: this._engine, canvas: this._canvas }}>
         {this.props.children}
@@ -30,7 +26,7 @@ export class Engine extends Component {
     )
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { props, state } = this
     console.log('Engine', { props, state, prevProps, prevState })
     render(
@@ -41,13 +37,18 @@ export class Engine extends Component {
     )
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.onResizeWindow)
     unmount()
   }
 
-  render () {
-    return <canvas ref={ref => (this._canvas = ref)} style={{ height: '100%', width: '100%' }} />
+  render() {
+    return (
+      <canvas
+        ref={ref => (this._canvas = ref)}
+        style={{ height: '100%', width: '100%' }}
+      />
+    )
   }
 
   onResizeWindow = () => {
